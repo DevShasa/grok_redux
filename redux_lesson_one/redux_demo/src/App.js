@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { connect } from 'react-redux';
 
-function App() {
+
+function App({ posts }) {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ul>
+        {posts.map(post =>
+          <li key={post.id}>{post.title}</li>
+        )}
+      </ul>
     </div>
   );
 }
 
-export default App;
+function mapStateToProps(state){
+  // determines what props from our store we want to pull into our component
+  // We are specifluing only pull from the state's posts property
+  return {posts: state.posts}
+} 
+
+export default connect(mapStateToProps)(App)
