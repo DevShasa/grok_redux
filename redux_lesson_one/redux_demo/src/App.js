@@ -10,9 +10,23 @@ class App extends Component {
       postID: 2
     }
   }
+
+  componentDidMount(){
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.json())
+      .then(json=>{
+        this.props.dispatch({
+          type: 'LOAD_POSTS',
+          payload: json
+        })
+      })
+  }
+
   handleChange = (event) => {
+    // This function is triggered every-time text is input in input-box
     this.setState({value: event.target.value})
   }
+
   handleSubmit = (event)=>{
     event.preventDefault()
     this.props.dispatch({
@@ -47,10 +61,13 @@ class App extends Component {
 
 function mapStateToProps(state){
   // determines what props from our store we want to pull into our component
-  // We are specifluing only pull from the state's posts property
+  // We are specifying only pull from the state's posts property
+  // posts will be made available to App by Provider as a prop 
   return {posts: state.posts}
 }
 function mapDispatchToProps(dispatch){
+  // dispatch is also made available to App by Provider as a prop 
+  // example this.state.dispatch()
   return {dispatch}
 }
 

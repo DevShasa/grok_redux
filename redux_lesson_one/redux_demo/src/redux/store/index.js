@@ -7,10 +7,19 @@ const initialState = {
 
 const reducer = (state=initialState, action) => {
     if(action.type ==="ADD_POST"){
-        // clone the initial state then overried posts with the payload
+        // clone the initial state then override posts with the payload
         return Object.assign({}, state, {
             posts: state.posts.concat(action.payload)
         })
+    }
+
+    if(action.type ==="LOAD_POSTS"){
+        return{
+            // fetch whatever is in state
+            ...state,
+            // concatenate payload with the rest of posts data 
+            posts: state.posts.concat(action.payload) 
+        }
     }
 
     return state
