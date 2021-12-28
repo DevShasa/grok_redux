@@ -1,5 +1,5 @@
-import { createStore } from 'redux';
-
+import { createStore } from 'redux'; //Getstate, Dispatch, Subscribe 
+// dispatch({action_type, action_payload}) => reducer(state, action){if(action.type === TYPE){//load new state}} 
 const initialState = {
     posts: [{id: 1, title: 'Test Post'}],
     signUpModal: {open: false}
