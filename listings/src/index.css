@@ -5,9 +5,37 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
 }
-
+.App{
+  text-align: center;
+  border-top: 2px solid rgb(199, 199, 199);
+  margin-top: 3em;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+span{
+  display: inline-block;
+  padding:0.2rem;
+}
+span + span {
+  margin-top: .3rem;
+}
+.delete{
+  padding: 5px 7px;
+  border-radius: 4px;
+  color: white;
+  background-color: rgb(49, 49, 49);
+  cursor:pointer;
+}
+.listing{
+  display: grid;
+  grid-template-columns: 4fr 1fr 1fr;
+  grid-template-rows: auto;
+}
+form{
+  margin-top: 1rem;
 }
