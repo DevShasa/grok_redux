@@ -3,7 +3,9 @@ const Task = (props)=>{
     return(
         <div className="task">
             <div className="task-header">
-                <h4>{props.task.title}</h4>
+                <span className="header-text">
+                    {props.task.title}
+                </span>
             </div>
             <div className="task-body">
                 {props.task.description}

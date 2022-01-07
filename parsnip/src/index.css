@@ -5,22 +5,40 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(238, 238, 238);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 .task{
   margin: 1rem;
-  padding: 1rem;
-  background-color: azure;
+  background-color: white;
+  box-shadow: 6px 4px 12px 1px rgba(0, 0, 0, 0.164);
+  border-radius: 4px;
+}
+.task-header{
+  padding: 1rem 0.5rem;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.26);
+}
+.header-text{
+  /* font-size: 1.05rem; */
+  font-weight: bold;
+}
+.task-body{
+  /* trouble */
+  padding: 0.5rem;
 }
 .tasks-lists{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto;
+  height: 100vh;
 }
+
+.task-list + .task-list{
+  border-left: 8px solid rgb(255, 255, 255);
+} 
 .task-list{
-  border: 1px solid red;
+  padding: 1rem;
+}
+.task-list-title{
+  text-align: center;
 }

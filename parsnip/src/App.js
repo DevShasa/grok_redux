@@ -10,10 +10,22 @@ const mockTasks = [
     },
     {
     id: 2,
-    title: 'Peace on Earth',
-    description: 'No big deal.',
+    title: 'Fetch Groceries',
+    description: 'Fetch groceries from the shop',
     status: 'In Progress',
     },
+    {
+    id: 3,
+    title: 'Grok react',
+    description: 'We must omoks with this react think my guy',
+    status: 'Complete',
+    },
+    {
+      id: 4,
+      title: 'Grok react',
+      description: 'We must omoks with this react think my guy',
+      status: 'Unstarted',
+    }
 ];
 
 class App extends Component{

@@ -6,6 +6,7 @@ export default class TasksPage extends Component{
     renderTasksList(){
         const {tasks} = this.props;
         return TASK_STATUSES.map(status =>{
+            // select all the tasks that match the status 
             const statusTasks = tasks.filter(task => task.status === status);
             return <Tasklist key={status} status={status} tasks={statusTasks}/>
             }
