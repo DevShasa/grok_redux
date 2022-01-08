@@ -2,6 +2,7 @@ import React, { Component} from "react";
 import Tasklist from './Tasklist';
 
 const TASK_STATUSES = ['Unstarted', 'In Progress', 'Complete']
+// Each task in the list is replaced with <Tasklist> containing all the tasks with that tag 
 export default class TasksPage extends Component{
     renderTasksList(){
         const {tasks} = this.props;
