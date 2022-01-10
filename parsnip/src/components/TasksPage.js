@@ -29,6 +29,23 @@ export default class TasksPage extends Component{
         });
     }
     
+    onCreateTask = (e) =>{
+        e.preventDefault();
+        //This will submit the form by passing the data to the function in props
+        // the props maybe has a dispatch function or something  
+        this.props.onCreateTask({
+            title: this.state.title,
+            description: this.state.description,
+        });
+        this.resetForm();
+    }
+
+    toggleForm = ()=>{
+        this.setState({
+            showNewCardForm: !this.state.showNewCardForm
+        });
+    }
+
     renderTasksList(){
         const {tasks} = this.props;
         return TASK_STATUSES.map(status =>{
@@ -42,6 +59,35 @@ export default class TasksPage extends Component{
     render(){
         return(
             <div className="tasks">
+                <div className="task-list-header">
+                    <button
+                        className="btn"
+                        onClick = {this.toggleForm}
+                    >
+                        + New Task
+                    </button>
+                </div>
+                {this.state.showNewCardForm && (
+                    <form onSubmit = {this.onCreateTask}>
+                        <input
+                            className="full-width-input"
+                            onChange = {this.onTitleChange}
+                            value={this.state.title}
+                            type="text"
+                            placeholder="Title"
+                        />
+                        <input 
+                            className="full-width-input"
+                            onChange={this.onDescriptionChange}
+                            value={this.state.description}
+                            type="text"
+                            placeholder="Description"
+                        />
+                        <button type="submit" className="submit-button">
+                            Save
+                        </button>
+                    </form>
+                )}
                 <div className="tasks-lists">
                     {this.renderTasksList()}
                 </div>
