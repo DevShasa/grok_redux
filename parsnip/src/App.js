@@ -11,7 +11,6 @@ class App extends Component{
   }
 
   render(){
-    console.log('props from app:', this.props)
     return(
       <div className="main-content">
         <TasksPage 

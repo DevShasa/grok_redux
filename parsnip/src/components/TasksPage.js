@@ -57,6 +57,7 @@ export default class TasksPage extends Component{
     }
 
     render(){
+        console.log(this.props.tasks)
         return(
             <div className="tasks">
                 <div className="task-list-header">
