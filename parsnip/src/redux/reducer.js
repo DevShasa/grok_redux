@@ -30,6 +30,16 @@ export default function tasks(state= {tasks: mockTasks}, action){
     switch(action.type){
         case 'CREATE_TASK':
             return {tasks: state.tasks.concat(action.payload)}
+        case 'EDIT_TASK':
+            const {payload} = action;
+            return{
+                tasks: state.tasks.map( task => {
+                    if(task.id === payload.id){
+                        return Object.assign({}, task, payload.status);
+                    }
+                    return task
+                })
+            }
         default:
             return state
     }

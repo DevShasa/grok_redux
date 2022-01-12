@@ -17,7 +17,15 @@ body {
 .task-header{
   padding: 1rem 0.5rem;
   border-bottom: 3px solid rgba(0, 0, 0, 0.26);
+  display: flex;
+  justify-content: space-between;
 }
+.task-header> select{
+  border-radius: 2px;
+  border: 1px solid transparent;
+  color: rgb(83, 83, 83);
+}
+
 .header-text{
   /* font-size: 1.05rem; */
   font-weight: bold;

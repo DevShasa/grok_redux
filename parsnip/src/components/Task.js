@@ -28,7 +28,7 @@ const Task = (props)=>{
                                 {status}
                             </option>
                         )
-                    })}
+                    })}on
                 </select>
             </div>
             <div className="task-body">
@@ -38,8 +38,8 @@ const Task = (props)=>{
     )
     
     function onStatusChange(e){
-        console.log(props.task.id, e.target.value)
-        //props.onStatusChange(props.task.id, e.target.value)
+        // console.log(props.task.id, e.target.value)
+        props.onStatusChange(props.task.id, e.target.value)
     }
 
 };

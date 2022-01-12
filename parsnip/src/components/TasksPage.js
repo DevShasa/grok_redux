@@ -51,13 +51,19 @@ export default class TasksPage extends Component{
         return TASK_STATUSES.map(status =>{
             // select all the tasks that match the status 
             const statusTasks = tasks.filter(task => task.status === status);
-            return <Tasklist key={status} status={status} tasks={statusTasks}/>
+            return( 
+                <Tasklist 
+                    key={status} 
+                    status={status} 
+                    tasks={statusTasks}
+                    onStatusChange = {this.props.onStatusChange}
+                />
+                );
             }
         )
     }
 
     render(){
-        console.log(this.props.tasks)
         return(
             <div className="tasks">
                 <div className="task-list-header">

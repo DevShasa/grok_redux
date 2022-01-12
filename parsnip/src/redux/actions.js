@@ -17,3 +17,12 @@ export function createTask({title, description,}){
         }
     }
 }
+export function editTask(taskId, taskStatus){
+    return{
+        type: 'EDIT_TASK',
+        payload:{
+            id: taskId,
+            status: {status: taskStatus} 
+        }
+    }
+}
