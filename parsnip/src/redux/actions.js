@@ -17,12 +17,20 @@ export function createTask({title, description,}){
         }
     }
 }
-export function editTask(taskId, taskStatus){
+export function editTask(taskId, params={}){
     return{
         type: 'EDIT_TASK',
         payload:{
             id: taskId,
-            status: {status: taskStatus} 
+            params,
+        }
+    }
+}
+export function deleteTask(taskId){
+    return{
+        type: 'DELETE_TASK',
+        payload:{
+            id: taskId
         }
     }
 }

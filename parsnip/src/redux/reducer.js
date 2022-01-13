@@ -35,10 +35,14 @@ export default function tasks(state= {tasks: mockTasks}, action){
             return{
                 tasks: state.tasks.map( task => {
                     if(task.id === payload.id){
-                        return Object.assign({}, task, payload.status);
+                        return Object.assign({}, task, payload.params);
                     }
                     return task
                 })
+            }
+        case 'DELETE_TASK':
+            return{
+                tasks: state.tasks.filter(task => task.id !== action.payload.id)
             }
         default:
             return state

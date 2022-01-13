@@ -57,6 +57,7 @@ export default class TasksPage extends Component{
                     status={status} 
                     tasks={statusTasks}
                     onStatusChange = {this.props.onStatusChange}
+                    onDelete = {this.props.onDelete}
                 />
                 );
             }

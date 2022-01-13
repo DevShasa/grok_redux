@@ -2,7 +2,8 @@ import React from 'react';
 const TASK_STATUSES = [
     "Unstarted",
     "In Progress",
-    "Complete"
+    "Complete",
+    "Delete"
 ]
 
 const Task = (props)=>{
@@ -15,16 +16,8 @@ const Task = (props)=>{
 
                 <select value = {props.task.status} onChange={onStatusChange}>
                     {TASK_STATUSES.map(status =>{
-                        let selected = false 
-                        if(status === props.task.status){
-                            selected = true
-                        }
                         return(
-                            <option 
-                                key={status} 
-                                value = {status}
-                                {...selected} 
-                            >
+                            <option key={status} value = {status}>
                                 {status}
                             </option>
                         )
@@ -38,8 +31,11 @@ const Task = (props)=>{
     )
     
     function onStatusChange(e){
-        // console.log(props.task.id, e.target.value)
-        props.onStatusChange(props.task.id, e.target.value)
+        if(e.target.value !== "Delete"){
+            props.onStatusChange(props.task.id, e.target.value)
+        }else{
+            props.onDelete(props.task.id)
+        }
     }
 
 };

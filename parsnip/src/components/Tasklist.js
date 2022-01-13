@@ -12,6 +12,7 @@ const Tasklist = (props) =>{
                     key={task.id} 
                     task={task} 
                     onStatusChange={props.onStatusChange}
+                    onDelete = {props.onDelete}
                 />
             ))}
         </div>
