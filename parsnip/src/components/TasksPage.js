@@ -38,6 +38,7 @@ export default class TasksPage extends Component{
             description: this.state.description,
         });
         this.resetForm();
+        
     }
 
     toggleForm = ()=>{
@@ -72,30 +73,33 @@ export default class TasksPage extends Component{
                         className="btn"
                         onClick = {this.toggleForm}
                     >
-                        + New Task
+                        {this.state.showNewCardForm ? "Close": "+ New Task"}
                     </button>
                 </div>
-                {this.state.showNewCardForm && (
-                    <form onSubmit = {this.onCreateTask}>
-                        <input
-                            className="full-width-input"
-                            onChange = {this.onTitleChange}
-                            value={this.state.title}
-                            type="text"
-                            placeholder="Title"
-                        />
-                        <input 
-                            className="full-width-input"
-                            onChange={this.onDescriptionChange}
-                            value={this.state.description}
-                            type="text"
-                            placeholder="Description"
-                        />
-                        <button type="submit" className="submit-button">
-                            Save
-                        </button>
-                    </form>
-                )}
+                <div className={this.state.showNewCardForm ? "modal-visible": "modal-invisible"}>
+                    <div className="modal-backdrop"></div>
+                    <div className="modal-body">
+                        <form onSubmit = {this.onCreateTask} className="taskForm">
+                            <input
+                                className="full-width-input"
+                                onChange = {this.onTitleChange}
+                                value={this.state.title}
+                                type="text"
+                                placeholder="Title"
+                            />
+                            <textarea 
+                                className="full-width-input"
+                                onChange={this.onDescriptionChange}
+                                value={this.state.description}
+                                placeholder="Description"
+                                rows ="8"
+                            ></textarea>
+                            <button type="submit" className="submit-button">
+                                Save
+                            </button>
+                        </form>
+                    </div>
+                </div>
                 <div className="tasks-lists">
                     {this.renderTasksList()}
                 </div>
