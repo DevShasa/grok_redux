@@ -1,32 +1,21 @@
 import * as api from '../api';
 
-let _id = 1
-export function uniqueId(){
-    //The increment operator (++) increments (adds one to) its operand and returns a value.
-    return _id++;
-}
-
-
 //SYNCHRONOUS ACTION CREATORS
-export function createTask({title, description,}){
+function createTaskSucceeded(task){
     return{
-        type: 'CREATE_TASK',
+        type: 'CREATE_TASK_SUCCEEDED',
         payload:{
-            id: uniqueId(),
-            title,
-            description,
-            status: 'Unstarted'
+            task
         }
     }
 }
-export function editTask(taskId, params={}){
+export function editTaskSucceeded(task){
     return{
-        type: 'EDIT_TASK',
+        type: 'EDIT_TASK_SUCCEEDED',
         payload:{
-            id: taskId,
-            params,
-        }
-    }
+            task,
+        },
+    };
 }
 export function deleteTask(taskId){
     return{
@@ -53,4 +42,27 @@ export function fetchTasks(){
             dispatch(fetchTasksSucceeded(resp.data));
         });
     };
+}
+
+export function createTask({title, description, status = 'Unstarted'}){
+    return dispatch =>{
+        api.createTask({title, description, status}).then(resp =>{
+            dispatch(createTaskSucceeded(resp.data));
+        });
+    };
+}
+
+function getTaskById(tasks, id){
+    return tasks.find(task => task.id === id )
+}
+export function editTask(taskId, params={}){
+    return (dispatch, getState) =>{
+        console.log(getState().tasks)
+        const task = getTaskById(getState().tasks, taskId);
+        const updatedTask = Object.assign({}, task, params);
+
+        api.editTask(taskId, updatedTask).then(resp =>{
+            dispatch(editTaskSucceeded(resp.data));
+        })
+    }
 }
