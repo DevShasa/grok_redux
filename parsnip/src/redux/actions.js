@@ -1,11 +1,13 @@
-//In this action creator file is where side effects are handled 
-let _id = 1;
+import * as api from '../api';
+
+let _id = 1
 export function uniqueId(){
     //The increment operator (++) increments (adds one to) its operand and returns a value.
     return _id++;
 }
 
-//our action
+
+//SYNCHRONOUS ACTION CREATORS
 export function createTask({title, description,}){
     return{
         type: 'CREATE_TASK',
@@ -33,4 +35,22 @@ export function deleteTask(taskId){
             id: taskId
         }
     }
+}
+
+function fetchTasksSucceeded(tasks){
+    return{
+        type: 'FETCH_TASKS_SUCCEEDED',
+        payload: {
+            tasks
+        }
+    }
+}
+
+//ASYNCHRONOUS ACTION CREATORS 
+export function fetchTasks(){
+    return dispatch =>{
+        api.fetchTasks().then(resp=>{
+            dispatch(fetchTasksSucceeded(resp.data));
+        });
+    };
 }
