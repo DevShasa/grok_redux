@@ -39,15 +39,27 @@ function fetchTasksStarted(){
         type: "FETCH_TASKS_STARTED",
     };
 }
+function fetchTasksFailed(error){
+    return{
+        type:'FETCH_TASKS_FAILED',
+        payload: {error,},
+    };
+}
+
 
 //ASYNCHRONOUS ACTION CREATORS 
 export function fetchTasks(){
     return dispatch =>{
         dispatch(fetchTasksStarted());
         
-        api.fetchTasks().then(resp=>{
-            setTimeout(()=>{ dispatch(fetchTasksSucceeded(resp.data));},2000);
-        })
+        api
+            .fetchTasks()
+            .then(resp=>{
+                //throw new Error('Siet, not able to fetch tasks')})
+                setTimeout(()=>{ dispatch(fetchTasksSucceeded(resp.data));},2000);})
+            .catch(err=>{
+                dispatch(fetchTasksFailed(err.message))
+            })
     }
 
 }
