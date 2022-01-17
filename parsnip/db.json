@@ -7,12 +7,6 @@
       "status": "In Progress"
     },
     {
-      "id": 2,
-      "title": "Peace on Earth",
-      "description": "No big deal.",
-      "status": "Complete"
-    },
-    {
       "id": 3,
       "title": "Create Facebook for dogs",
       "description": "The hottest new social network",
@@ -23,18 +17,6 @@
       "title": "Grok react",
       "description": "We must omoks with this react thin my guy",
       "status": "In Progress"
-    },
-    {
-      "id": 5,
-      "title": "Fetch groceries",
-      "description": "Fetch groceries from the shop",
-      "status": "In Progress"
-    },
-    {
-      "title": "Jabulani",
-      "description": "I mean why not ",
-      "status": "Complete",
-      "id": 6
     },
     {
       "title": "New task dispatch ",

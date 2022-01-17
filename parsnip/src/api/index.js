@@ -1,3 +1,4 @@
+// THIS IS THE API INTERFACE
 import axios from 'axios';
 
 const API_BASE_URL = "http://localhost:3001";
@@ -18,4 +19,7 @@ export function createTask(params){
 
 export function editTask(id, params){
     return client.put(`${API_BASE_URL}/tasks/${id}`, params)
+}
+export function deleteTask(id){
+    return client.delete(`${API_BASE_URL}/tasks/${id}`)
 }

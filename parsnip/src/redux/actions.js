@@ -9,7 +9,7 @@ function createTaskSucceeded(task){
         }
     }
 }
-export function editTaskSucceeded(task){
+function editTaskSucceeded(task){
     return{
         type: 'EDIT_TASK_SUCCEEDED',
         payload:{
@@ -17,7 +17,7 @@ export function editTaskSucceeded(task){
         },
     };
 }
-export function deleteTask(taskId){
+function deleteTaskSucceeded(taskId){
     return{
         type: 'DELETE_TASK',
         payload:{
@@ -57,12 +57,22 @@ function getTaskById(tasks, id){
 }
 export function editTask(taskId, params={}){
     return (dispatch, getState) =>{
-        console.log(getState().tasks)
+        //Get the task 
         const task = getTaskById(getState().tasks, taskId);
+        //update the task with changed parameters
         const updatedTask = Object.assign({}, task, params);
-
+        // send the changed task object to server then dispatch from server to state
         api.editTask(taskId, updatedTask).then(resp =>{
             dispatch(editTaskSucceeded(resp.data));
         })
     }
+}
+export function deleteTask(id){
+    return dispatch =>{
+        api.deleteTask(id).then(resp =>{
+            if(resp.status === 200){
+                dispatch(deleteTaskSucceeded(id))
+            };
+        });
+    };
 }
