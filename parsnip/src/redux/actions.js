@@ -34,14 +34,22 @@ function fetchTasksSucceeded(tasks){
         }
     }
 }
+function fetchTasksStarted(){
+    return{
+        type: "FETCH_TASKS_STARTED",
+    };
+}
 
 //ASYNCHRONOUS ACTION CREATORS 
 export function fetchTasks(){
     return dispatch =>{
+        dispatch(fetchTasksStarted());
+        
         api.fetchTasks().then(resp=>{
-            dispatch(fetchTasksSucceeded(resp.data));
-        });
-    };
+            setTimeout(()=>{ dispatch(fetchTasksSucceeded(resp.data));},2000);
+        })
+    }
+
 }
 
 export function createTask({title, description, status = 'Unstarted'}){

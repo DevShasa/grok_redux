@@ -34,6 +34,7 @@ class App extends Component{
           onCreateTask = {this.onCreateTask}
           onStatusChange = {this.onStatusChange}
           onDelete = {this.onDelete}
+          isLoading = {this.props.isLoading}
         />
       </div>
     )
@@ -41,8 +42,7 @@ class App extends Component{
 }
 
 function mapStateToProps(state){
-  return {
-    tasks: state.tasks.tasks
-  }
+  const {tasks, isLoading} = state.tasks;
+  return { tasks, isLoading };
 }
 export default connect(mapStateToProps)(App)

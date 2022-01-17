@@ -100,6 +100,8 @@ export default class TasksPage extends Component{
                         </form>
                     </div>
                 </div>
+                {this.props.isLoading && 
+                <div className="tasks-loading">Loading...</div>}
                 <div className="tasks-lists">
                     {this.renderTasksList()}
                 </div>

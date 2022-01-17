@@ -5,6 +5,11 @@ const initialState = {
 
 const tasksReducer = (state= initialState, action) =>{
     switch(action.type){
+        case 'FETCH_TASKS_STARTED':
+            return{
+                ...state,
+                isLoading: true,
+            }
         case 'FETCH_TASKS_SUCCEEDED':
             return {
                 ...state,
