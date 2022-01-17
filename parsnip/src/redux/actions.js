@@ -58,7 +58,7 @@ function getTaskById(tasks, id){
 export function editTask(taskId, params={}){
     return (dispatch, getState) =>{
         //Get the task 
-        const task = getTaskById(getState().tasks, taskId);
+        const task = getTaskById(getState().tasks.tasks, taskId);
         //update the task with changed parameters
         const updatedTask = Object.assign({}, task, params);
         // send the changed task object to server then dispatch from server to state

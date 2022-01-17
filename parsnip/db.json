@@ -10,19 +10,25 @@
       "id": 3,
       "title": "Create Facebook for dogs",
       "description": "The hottest new social network",
-      "status": "Complete"
+      "status": "Unstarted"
     },
     {
       "id": 4,
       "title": "Grok react",
       "description": "We must omoks with this react thin my guy",
-      "status": "In Progress"
+      "status": "Unstarted"
     },
     {
       "title": "New task dispatch ",
       "description": "New task dispatch waddup ",
-      "status": "Unstarted",
+      "status": "Complete",
       "id": 7
+    },
+    {
+      "title": "Make parsnip crud",
+      "description": "Parsnip now crudified",
+      "status": "Unstarted",
+      "id": 8
     }
   ]
 }
