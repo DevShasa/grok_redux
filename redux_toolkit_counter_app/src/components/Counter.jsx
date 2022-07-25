@@ -34,7 +34,10 @@ const Counter = () => {
             </IncrementBy>
 
             <Resetcount>
-                <button onClick = {()=>dispatch(reset())}>
+                <button onClick = {()=>{
+                        dispatch(reset())
+                        setIncrementAmmount(0)
+                    }}>
                     RESET
                 </button>
             </Resetcount>
