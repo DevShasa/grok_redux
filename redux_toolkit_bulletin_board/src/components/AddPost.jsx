@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
-import { addPost } from '../redux/features/postsSlice';
 import styled from "styled-components";
-import { nanoid } from '@reduxjs/toolkit';
+
+import { useDispatch, useSelector } from "react-redux";
+import { addPost } from '../redux/features/postsSlice';
+import { fetchAllUsers } from "../redux/features/usersSlice";
 
 const AddPost = () => {
 
@@ -10,21 +11,22 @@ const AddPost = () => {
     
     const [ title, setTitle ] = useState("")
     const [ content, setContent ] = useState("")
+    const [ userId, setUserId ] = useState("")
 
+    const users = useSelector(fetchAllUsers)
 
     function submitContent(){
-
-        const newBulletinItem = {
-            id: nanoid(),
-            title: title,
-            content: content
+        if(title && content){            
+            dispatch(addPost(title, content, userId));
+            setTitle("");
+            setContent("");
+            setUserId("")
+        }else{
+            window.alert("Please include title and content")
         }
-        console.log(newBulletinItem)
-        
-        dispatch(addPost(newBulletinItem))
-        setTitle("")
-        setContent("")
     }
+
+    const canSave = Boolean(title) && Boolean(content) && Boolean(userId)
 
     return (
         <div style = {{marginRight: "1rem"}}>
@@ -45,7 +47,14 @@ const AddPost = () => {
                     placeholder = "Enter text here"
                 />
 
-                <button onClick ={submitContent} type="button">
+                <select value={userId} onChange={(e)=>setUserId(e.target.value)}>
+                    <option value="" disabled selected hidden>Select Author</option>
+                    {users.map((user)=>(
+                        <option key={user.id} value={user.id}>{user.name}</option>
+                    ))}
+                </select>
+
+                <button onClick ={submitContent} type="button" disabled = {!canSave}>
                     Add New Bulletin
                 </button>
             </FormDiv>
