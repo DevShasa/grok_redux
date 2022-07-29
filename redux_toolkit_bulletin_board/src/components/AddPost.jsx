@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addPost } from '../redux/features/postsSlice';
 import { fetchAllUsers } from "../redux/features/usersSlice";
 
+
 const AddPost = () => {
 
     const dispatch = useDispatch()
@@ -16,11 +17,11 @@ const AddPost = () => {
     const users = useSelector(fetchAllUsers)
 
     function submitContent(){
-        if(title && content){            
+        if(title && content){           
             dispatch(addPost(title, content, userId));
             setTitle("");
             setContent("");
-            setUserId("")
+            setUserId(""); 
         }else{
             window.alert("Please include title and content")
         }
