@@ -13,27 +13,26 @@ const AddPost = () => {
     const [ title, setTitle ] = useState("")
     const [ content, setContent ] = useState("")
     const [ userId, setUserId ] = useState("")
-    const [addRequestStatus, setAddRequestStatus] = useState(false)
+    const [addRequestStatus, setAddRequestStatus] = useState("idle")
 
     const users = useSelector(fetchAllUsers)
 
-    const canSave = [title, content, userId].every(Boolean) && addRequestStatus === false
+    const canSave = [title, content, userId].every(Boolean) && addRequestStatus === "idle"
 
     function submitContent(){
         if(canSave){
             try{
-                setAddRequestStatus(true)
+                setAddRequestStatus("pending")
                 dispatch(addNewPost({title, body: content, userId})).unwrap()
                 // .unwrap returns payload or error   
                 // dispatch(addPost(title, content, parseInt(userId)));
                 setTitle("");
                 setContent("");
                 setUserId("");
-                setAddRequestStatus(false)
             }catch(error){
                 console.log('failed to save post', error)
             }finally{
-                setAddRequestStatus(false)
+                setAddRequestStatus("idle")
             }
 
         }else{
