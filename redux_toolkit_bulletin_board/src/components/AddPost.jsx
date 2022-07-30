@@ -17,8 +17,8 @@ const AddPost = () => {
     const users = useSelector(fetchAllUsers)
 
     function submitContent(){
-        if(title && content){           
-            dispatch(addPost(title, content, userId));
+        if(title && content){
+            dispatch(addPost(title, content, parseInt(userId)));
             setTitle("");
             setContent("");
             setUserId(""); 
@@ -30,7 +30,7 @@ const AddPost = () => {
     const canSave = Boolean(title) && Boolean(content) && Boolean(userId)
 
     return (
-        <div style = {{marginRight: "1rem"}}>
+        <FormContainer>
             <FormDiv>
                 <input 
                     type = "text"
@@ -59,11 +59,19 @@ const AddPost = () => {
                     Add New Bulletin
                 </button>
             </FormDiv>
-        </div>
+        </FormContainer>
     )
 }
 
 export default AddPost
+const FormContainer = styled.div`
+    height: fit-content;
+    margin-right: 1rem;
+    position:sticky;
+    top: 1rem;
+    z-index: 10;
+
+`
 
 const FormDiv = styled.form`
     display: flex;

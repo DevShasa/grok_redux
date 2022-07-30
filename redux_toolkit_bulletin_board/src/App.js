@@ -16,7 +16,5 @@ export default App;
 const ContainerDiv = styled.div`
   display: flex;
   justify-content: center;
-  height: 100vh;
-  background-color: #EDF2F7;
   padding: 1rem;
 `
