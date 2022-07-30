@@ -46,7 +46,7 @@ const PostsList = () => {
 
     return (
         <PostsListContaier>
-            {adding && <h3>Adding a new post</h3>}
+            {adding && <AddingIndicator>...Adding a new post...</AddingIndicator>}
             {postsStatus === 'loading'
                 ? <h2>Loading posts......</h2>
                 : postsStatus ==="succeeded"
@@ -71,4 +71,14 @@ const PostsListContaier = styled.div`
     ::-webkit-scrollbar {
         display: none;
     }
+`
+const AddingIndicator = styled.h3`
+    text-align:center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 5px;
+    background: rgb(131,58,180);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    color: white;
+    margin-bottom: 1rem;
 `

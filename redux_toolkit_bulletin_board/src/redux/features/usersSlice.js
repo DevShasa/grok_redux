@@ -6,12 +6,24 @@ const USERS_URL= "https://jsonplaceholder.typicode.com/users"
 const initialState = []
 
 
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () =>{
+export const fetchUsers = createAsyncThunk('users/fetchUsers', async (_,{rejectWithValue}) =>{
     try{
-        const response = await axios.get(USERS_URL)
-        return response.data
+        const userList = localStorage.getItem("users")
+        if(userList){
+            //lama iko kitu
+            return JSON.parse(userList)
+        }else{
+            // hakuna kitu buana
+            const response = await axios.get(USERS_URL)
+            localStorage.setItem("users", JSON.stringify(response.data))
+            return response.data
+        }
+
     }catch(error){
-        return error.message;
+        console.log('error', error);
+        console.log('data', error.response.data);
+        // console.log('message', error.response.data.message);
+        return rejectWithValue(error.response.data);
     }
 })
 

@@ -14,22 +14,27 @@ const initialState = {
 }
 
 // action with thunk 
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () =>{
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_,{rejectWithValue}) =>{
     try{
         const response = await axios.get(POSTS_URL)
         return response.data
     }catch(error){
-        return error.message;
+        console.log('error', error);
+        console.log('data', error.response.data);
+        // console.log('message', error.response.data.message);
+        return rejectWithValue(error.response.data);
     }
 })
 
-export const addNewPost = createAsyncThunk('posts/addNewPost', async(initialPost)=>{
+export const addNewPost = createAsyncThunk('posts/addNewPost', async(initialPost, {rejectWithValue})=>{
     try{
         const response = await axios.post(POSTS_URL, initialPost)
         return response.data
     }catch(error){
-        return error.message
-    }
+        console.log('error', error);
+        console.log('data', error.response.data);
+        // console.log('message', error.response.data.message);
+        return rejectWithValue(error.response.data);    }
 })
 
 
