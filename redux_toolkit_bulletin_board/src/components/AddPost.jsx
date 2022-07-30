@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { addPost } from '../redux/features/postsSlice';
+import { addNewPost,} from '../redux/features/postsSlice';
 import { fetchAllUsers } from "../redux/features/usersSlice";
 
 
@@ -13,21 +13,34 @@ const AddPost = () => {
     const [ title, setTitle ] = useState("")
     const [ content, setContent ] = useState("")
     const [ userId, setUserId ] = useState("")
+    const [addRequestStatus, setAddRequestStatus] = useState(false)
 
     const users = useSelector(fetchAllUsers)
 
+    const canSave = [title, content, userId].every(Boolean) && addRequestStatus === false
+
     function submitContent(){
-        if(title && content){
-            dispatch(addPost(title, content, parseInt(userId)));
-            setTitle("");
-            setContent("");
-            setUserId(""); 
+        if(canSave){
+            try{
+                setAddRequestStatus(true)
+                dispatch(addNewPost({title, body: content, userId})).unwrap()
+                // .unwrap returns payload or error   
+                // dispatch(addPost(title, content, parseInt(userId)));
+                setTitle("");
+                setContent("");
+                setUserId("");
+                setAddRequestStatus(false)
+            }catch(error){
+                console.log('failed to save post', error)
+            }finally{
+                setAddRequestStatus(false)
+            }
+
         }else{
             window.alert("Please include title and content")
         }
     }
 
-    const canSave = Boolean(title) && Boolean(content) && Boolean(userId)
 
     return (
         <FormContainer>
@@ -49,13 +62,13 @@ const AddPost = () => {
                 />
 
                 <select value={userId} onChange={(e)=>setUserId(e.target.value)}>
-                    <option value="" disabled selected hidden>Select Author</option>
+                    <option value="" disabled hidden>Select Author</option>
                     {users.map((user)=>(
                         <option key={user.id} value={user.id}>{user.name}</option>
                     ))}
                 </select>
 
-                <button onClick ={submitContent} type="button" disabled = {!canSave}>
+                <button onClick ={submitContent} type="button" disabled = {!canSave} style={{cursor: canSave ?"pointer" :"not-allowed"}}>
                     Add New Bulletin
                 </button>
             </FormDiv>
@@ -93,6 +106,5 @@ const FormDiv = styled.form`
 
     button {
         border: 1px solid grey;
-        cursor: pointer;
     }
 `

@@ -17,4 +17,5 @@ const ContainerDiv = styled.div`
   display: flex;
   justify-content: center;
   padding: 1rem;
+  height: 100vh;
 `
