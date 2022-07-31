@@ -9,7 +9,7 @@ const PostItem = ({post}) => {
     return (  
         <PostListItem >
             <h3>{post.title}</h3>
-            <p>{post.body.substring(0,100)}</p>
+            <p>{post.body.substring(0,69)}</p>
             <AuthorByline authorId={post.userId}/>
             <TimeAgo timestamp = {post.date}/>
             <ToPostDetail to={`/post/${post.id}`}>View More</ToPostDetail>
