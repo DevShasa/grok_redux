@@ -1,21 +1,22 @@
-import PostsList from "./components/PostsList";
-import styled from "styled-components";
-import AddPost from "./components/AddPost";
+import PostsList from "./pages/PostsList";
+import AddPost from "./pages/AddPost";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./container/Layout";
+import SinglePagePost from "./pages/SinglePagePost";
 
 function App() {
   return (
-    <ContainerDiv className="App">
-      <AddPost />
-      <PostsList />
-    </ContainerDiv>
+      <Routes>
+          <Route path="/" element={<Layout />} >
+              <Route index element = {<PostsList />} />
+              <Route path = "post">
+                  <Route index element ={<AddPost/>}/>
+                  <Route path=":postId" element={<SinglePagePost/>}/>
+              </Route>
+          </Route>
+      </Routes>
   );
 }
 
 export default App;
 
-const ContainerDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-  height: 100vh;
-`

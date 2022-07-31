@@ -7,9 +7,9 @@ import {
     getPostsStatus,
     getPostsError,
     getAddingStatus
-} from '../redux/features/postsSlice';
+} from "../redux/features/postsSlice";
 
-import PostItem from './PostItem';
+import PostItem from "../components/PostItem";
 
 const PostsList = () => {
     const dispatch = useDispatch()
