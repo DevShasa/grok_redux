@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {getPostById, editingPostStatus} from "../redux/features/postsSlice";
+import {getPostById, editingPostStatus, failedtoEditPost} from "../redux/features/postsSlice";
 
 import AuthorByline from "../components/AuthorByline";
 import ReactionButtons from "../components/ReactionButtons";
@@ -13,6 +13,8 @@ const SinglePagePost = () => {
     const isPostBeingUpdated = useSelector(editingPostStatus)
     const { postId } = useParams()
     const post = useSelector((state)=> getPostById(state, Number(postId)))
+    const failedToEdit = useSelector(failedtoEditPost)
+
 
     return (
         <div>
@@ -24,6 +26,7 @@ const SinglePagePost = () => {
                 :(
                     <>
                         {isPostBeingUpdated && <Updating>...Updating this post...</Updating>}
+                        {failedToEdit && <Updating>...Failed to edit post...</Updating>}
                         <PostContainer>
                             <h2>{post?.title}</h2>
                             <p>{post?.body}</p>

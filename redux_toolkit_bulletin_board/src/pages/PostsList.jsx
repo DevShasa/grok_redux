@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from 'styled-components';
 import { 
     selectAllPosts, 
-    fetchPosts,
+    // fetchPosts,
     getPostsStatus,
     getPostsError,
     getAddingStatus
@@ -12,7 +12,7 @@ import {
 import PostItem from "../components/PostItem";
 
 const PostsList = () => {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
 
     // const posts = useSelector(state => state.posts)
@@ -20,21 +20,21 @@ const PostsList = () => {
     const postsStatus = useSelector(getPostsStatus)
     const postsError = useSelector(getPostsError)
     const addStatus = useSelector(getAddingStatus)
-    const [adding, setAdding] = useState(false)
+    // const [adding, setAdding] = useState(false)
 
 
 
-    useEffect(()=>{
-        if(postsStatus === "idle"){
-            dispatch(fetchPosts())
-        }
+    // useEffect(()=>{
+    //     // if(postsStatus === "idle"){
+    //     //     dispatch(fetchPosts())
+    //     // }
 
-        if(addStatus){
-            setAdding(true)
-        }else{
-            setAdding(false)
-        }
-    },[dispatch, postsStatus,addStatus ])
+    //     if(addStatus){
+    //         setAdding(true)
+    //     }else{
+    //         setAdding(false)
+    //     }
+    // },[dispatch,/* postsStatus*/addStatus ])
 
     function orderedPosts(posts){
         // orders the posts by most recent
@@ -46,7 +46,7 @@ const PostsList = () => {
 
     return (
         <PostsListContaier>
-            {adding && <AddingIndicator>...Adding a new post...</AddingIndicator>}
+            {addStatus && <AddingIndicator>...Adding a new post...</AddingIndicator>}
             {postsStatus === 'loading'
                 ? <h2>Loading posts......</h2>
                 : postsStatus ==="succeeded"

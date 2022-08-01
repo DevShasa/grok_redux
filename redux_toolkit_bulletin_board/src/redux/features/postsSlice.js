@@ -11,7 +11,8 @@ const initialState = {
     status: 'idle', // 'idle' | 'loading' | 'failed' | 'succeeded'
     error: null,
     addingPost: false,
-    editingPost: false 
+    editingPost: false, 
+    failedToEditPost: false
 }
 
 // action with thunk 
@@ -35,7 +36,8 @@ export const addNewPost = createAsyncThunk('posts/addNewPost', async(initialPost
         console.log('error', error);
         console.log('data', error.response.data);
         // console.log('message', error.response.data.message);
-        return rejectWithValue(error.response.data);    }
+        return rejectWithValue(error.response.data);    
+    }
 })
 
 export const updatePost = createAsyncThunk("posts/UpdatePost", async (updatePostDetails, {rejectWithValue})=>{
@@ -44,8 +46,27 @@ export const updatePost = createAsyncThunk("posts/UpdatePost", async (updatePost
         const response = await axios.put(`${POSTS_URL}/${id}`, {id, title, body, userId, reactions})
         return response.data // the changed object
     }catch(err){
+        console.log('error', err);
+        console.log('data', err.response.data);
         console.log("error when updating")
+        // console.log('message', err.response.data.message); 
+        // server has to be configured to return a message
         return rejectWithValue(err.response.data);
+    }
+})
+
+export const deletePost = createAsyncThunk('posts/DeletePost', async(id, {rejectWithValue})=>{
+    try{
+        const response = await axios.delete(`${POSTS_URL}/${id}`)
+        if(response?.status === 200){
+            return {deletePostThathas: id}
+        }
+        return `${response?.status}: ${response.statusText}`
+    }catch(error){
+        console.log('error', error);
+        console.log('data', error.response.data);
+        // console.log('message', error.response.data.message);
+        return rejectWithValue(error.response.data);
     }
 })
 
@@ -87,6 +108,7 @@ const postsSlice = createSlice({
         builder
             .addCase(fetchPosts.pending, (state, action) =>{
                 state.status = "loading"
+                state.failedToEditPost = false 
             })
             .addCase(fetchPosts.fulfilled,(state, action)=>{
                 let min = 1
@@ -112,6 +134,8 @@ const postsSlice = createSlice({
             })
             .addCase(addNewPost.pending, (state, action)=>{
                 state.addingPost = true
+                state.failedToEditPost = false 
+
             })
             .addCase(addNewPost.fulfilled, (state, action)=>{
                 // returns the saved post we prepare it before pushing it
@@ -133,6 +157,10 @@ const postsSlice = createSlice({
             .addCase(updatePost.pending, (state, action)=>{
                 state.editingPost = true
             })
+            .addCase(updatePost.rejected, (state, action)=>{
+                state.editingPost = false
+                state.failedToEditPost = true
+            })
             .addCase(updatePost.fulfilled, (state, action)=>{
                 // hmm, this might not be nescesary
                 // using rejectWithValue means that failed requests are registered as...
@@ -153,6 +181,16 @@ const postsSlice = createSlice({
                 state.posts = [...newPostsList, action.payload]
                 state.editingPost = false
             })
+            .addCase(deletePost.fulfilled, (state, action)=>{
+                if(!action.payload?.deletePostThathas){
+                    console.log('Could not complete DeletePost')
+                    console.log('Delete post failed payload:', action.payload)
+                    return
+                }
+                const { deletePostThathas:id } = action.payload
+                const posts = state.posts.filter(post=> post.id !== id)
+                state.posts = posts
+            })
 
     }
 })
@@ -169,5 +207,6 @@ export const getPostsStatus = (state) => state.posts.status
 export const getPostsError = (state) => state.posts.error
 export const getAddingStatus = (state) => state.posts.addingPost
 export const editingPostStatus = (state) => state.posts.editingPost
+export const failedtoEditPost = (state) => state.posts.failedToEditPost
 export const getPostById = (state, postId) =>
     state.posts.posts.find(post=> post.id === postId)

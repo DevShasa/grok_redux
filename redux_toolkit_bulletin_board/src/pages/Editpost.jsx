@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getPostById, updatePost } from "../redux/features/postsSlice";
+import { getPostById, updatePost, deletePost } from "../redux/features/postsSlice";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -54,6 +54,21 @@ const Editpost = () => {
         }
     }
 
+    const deleteThisPost = ()=>{
+        try{
+            setUpdateRequestStatus("pending")
+            dispatch(deletePost(post.id)).unwrap()
+            setTitle("");
+            setContent("");
+            setUserId("");
+            navigate(`/`)
+        }catch(err){
+            console.log("failed to delete post")
+        }finally{
+            setUpdateRequestStatus("idle")
+        }
+    }
+
     return (
         <FormContainer>
             <FormDiv>
@@ -83,6 +98,13 @@ const Editpost = () => {
 
                 <button onClick ={submitContentForUpdate} type="button" disabled = {!canSave} style={{cursor: canSave ?"pointer" :"not-allowed"}}>
                     Edit Post
+                </button>
+                <button onClick ={deleteThisPost} type="button" disabled = {!canSave} style={{
+                    cursor: canSave ?"pointer" :"not-allowed",
+                    color: "white",
+                    backgroundColor:"black"
+                    }}>
+                    Delete Post
                 </button>
             </FormDiv>
         </FormContainer>
