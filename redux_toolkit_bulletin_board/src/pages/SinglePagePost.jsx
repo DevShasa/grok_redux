@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {getPostById} from "../redux/features/postsSlice";
+import {getPostById, editingPostStatus} from "../redux/features/postsSlice";
 
 import AuthorByline from "../components/AuthorByline";
 import ReactionButtons from "../components/ReactionButtons";
@@ -10,6 +10,7 @@ import TimeAgo from "../components/TimeAgo";
 
 const SinglePagePost = () => {
 
+    const isPostBeingUpdated = useSelector(editingPostStatus)
     const { postId } = useParams()
     const post = useSelector((state)=> getPostById(state, Number(postId)))
 
@@ -21,22 +22,35 @@ const SinglePagePost = () => {
                         <BackHome to="/">Go back Home</BackHome>
                     </NotFound> )
                 :(
-                <PostContainer>
-                    <h2>{post?.title}</h2>
-                    <p>{post?.body}</p>
-                    <div>
-                        <AuthorByline authorId={post?.userId}/>
-                        <TimeAgo timestamp = {post?.date}/>
-                    </div>
-                    <ReactionButtons post={post} postDetailView/>
-                </PostContainer>
-                
+                    <>
+                        {isPostBeingUpdated && <Updating>...Updating this post...</Updating>}
+                        <PostContainer>
+                            <h2>{post?.title}</h2>
+                            <p>{post?.body}</p>
+                            <div>
+                                <AuthorByline authorId={post?.userId}/>
+                                <TimeAgo timestamp = {post?.date}/>
+                            </div>
+                            <ReactionButtons post={post} postDetailView/>
+                        </PostContainer>
+                    </>
             )}
         </div>
     )
 }
 
 export default SinglePagePost
+
+const Updating =styled.h3`
+    text-align:center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 5px;
+    background: rgb(131,58,180);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    color: white;
+    margin-bottom: 1rem;
+`
 
 const PostContainer = styled.div`
     border: 1px solid #acaaaa;
@@ -53,7 +67,7 @@ const BackHome = styled(Link)`
     font-weight: bolder;
     color:white;
     background-color: #353535
-`
+`;
 
 const NotFound = styled.div`
     display: grid;

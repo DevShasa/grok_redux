@@ -4,10 +4,12 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewPost,} from '../redux/features/postsSlice';
 import { fetchAllUsers } from "../redux/features/usersSlice";
+import { useNavigate } from 'react-router-dom';
 
 
 const AddPost = () => {
 
+    const navigate  = useNavigate()
     const dispatch = useDispatch()
     
     const [ title, setTitle ] = useState("")
@@ -29,6 +31,7 @@ const AddPost = () => {
                 setTitle("");
                 setContent("");
                 setUserId("");
+                navigate('/')
             }catch(error){
                 console.log('failed to save post', error)
             }finally{
@@ -55,6 +58,7 @@ const AddPost = () => {
                 <textarea 
                     name = "content"
                     type = "text"
+                    rows="30" cols="10"
                     value = {content}
                     onChange = {(e) => setContent(e.target.value)}
                     placeholder = "Enter text here"
@@ -77,11 +81,13 @@ const AddPost = () => {
 
 export default AddPost
 const FormContainer = styled.div`
+    margin-top: 2rem;
     height: fit-content;
     margin-right: 1rem;
     position:sticky;
     top: 1rem;
-    z-index: 10;
+    min-width: 70%;
+    min-height: 70%;
 
 `
 

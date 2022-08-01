@@ -1,14 +1,44 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, matchRoutes } from "react-router-dom";
 import styled from "styled-components"
 
 
 const Header = () => {
+
+    const location  = useLocation()
+    const [ editPost, setEditPost ] = useState(false)
+    const [matchedPath, setMatchedPath] = useState({})
+
+    useEffect(()=>{
+        // Display a button if patch mathes post/postId else dont display
+        const routes = [{path: "/post/:postId"}]
+        const route = matchRoutes(routes, location)
+        // line of code above will return an object if match else null
+        
+        if(route){
+            setEditPost(true)
+            setMatchedPath(route[0])
+        }else{
+            setEditPost(false)
+            setMatchedPath({})
+
+        }
+        // console.log("Location: ", route)
+    },[location])
+
     return (
         <HeaderBox>
             <p>Redux blog</p>
             <ul>
                 <li><Link to="/" >Home</Link></li>
                 <li><Link to="post">Post</Link></li>
+                {editPost && (
+                    <li>
+                        <Link to={`/post/edit/${matchedPath.params.postId}`}>
+                            Edit Post
+                        </Link>
+                    </li>
+                )}
             </ul>
         </HeaderBox>
     )

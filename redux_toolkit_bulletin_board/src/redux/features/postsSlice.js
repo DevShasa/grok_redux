@@ -10,7 +10,8 @@ const initialState = {
     posts: [],
     status: 'idle', // 'idle' | 'loading' | 'failed' | 'succeeded'
     error: null,
-    addingPost: false
+    addingPost: false,
+    editingPost: false 
 }
 
 // action with thunk 
@@ -37,6 +38,16 @@ export const addNewPost = createAsyncThunk('posts/addNewPost', async(initialPost
         return rejectWithValue(error.response.data);    }
 })
 
+export const updatePost = createAsyncThunk("posts/UpdatePost", async (updatePostDetails, {rejectWithValue})=>{
+    const {id, title, body, userId, reactions} = updatePostDetails;
+    try {
+        const response = await axios.put(`${POSTS_URL}/${id}`, {id, title, body, userId, reactions})
+        return response.data // the changed object
+    }catch(err){
+        console.log("error when updating")
+        return rejectWithValue(err.response.data);
+    }
+})
 
 const postsSlice = createSlice({
     name: 'posts',
@@ -119,6 +130,29 @@ const postsSlice = createSlice({
                 state.posts.push(action.payload)
                 state.addingPost = false
             })
+            .addCase(updatePost.pending, (state, action)=>{
+                state.editingPost = true
+            })
+            .addCase(updatePost.fulfilled, (state, action)=>{
+                // hmm, this might not be nescesary
+                // using rejectWithValue means that failed requests are registered as...
+                // ...updatePost.rejected
+                if(!action.payload?.id){
+                    console.log("Update could not be completed")
+                    console.log(action.payload)
+                    state.editingPost = false
+                    return
+                }
+
+                // update state with new data
+                const { id } = action.payload;
+                action.payload.date = new Date().toISOString()
+                action.payload.userId = Number(action.payload.userId)
+                const newPostsList = state.posts.filter(post=> post.id !== id)
+
+                state.posts = [...newPostsList, action.payload]
+                state.editingPost = false
+            })
 
     }
 })
@@ -134,5 +168,6 @@ export const selectAllPosts = (state) => state.posts.posts
 export const getPostsStatus = (state) => state.posts.status
 export const getPostsError = (state) => state.posts.error
 export const getAddingStatus = (state) => state.posts.addingPost
+export const editingPostStatus = (state) => state.posts.editingPost
 export const getPostById = (state, postId) =>
     state.posts.posts.find(post=> post.id === postId)
