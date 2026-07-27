@@ -139,7 +139,7 @@ const postsSlice = createSlice({
             })
             .addCase(addNewPost.fulfilled, (state, action)=>{
                 // returns the saved post we prepare it before pushing it
-                action.payload.id = state.posts[state.posts.length - 1].id + 1
+                action.payload.id = Math.max(...state.posts.map(post => Number(post.id))) + 1
                 action.payload.userId = Number(action.payload.userId)
                 action.payload.date = new Date().toISOString()
                 action.payload.reactions={
